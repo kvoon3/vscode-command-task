@@ -6,7 +6,10 @@ import { logger } from './utils'
 import type { ConfigKeyTypeMap } from './generated/meta'
 import { commands, scopedConfigs } from './generated/meta'
 
-export function addCommandTask(list: ConfigKeyTypeMap['commandTask.add']) {
+export function addCommandTask(
+  list: ConfigKeyTypeMap['commandTask.add'],
+  validator: () => boolean = () => true,
+) {
   for (const [_, i] of list.entries()) {
     const commandName = `${scopedConfigs.scope}.${i.name}`
     const commandType = computed(() => i.type || 'async')
@@ -21,6 +24,8 @@ export function addCommandTask(list: ConfigKeyTypeMap['commandTask.add']) {
             logger.info('-- Start --')
             await Promise.all(tryList.map(async (command) => {
               await executeCommand(command)
+              if (!validator())
+                throw new Error('validator check failed')
               logger.info(`[${new Date().toISOString()}]: ${command}`)
             }))
           }
@@ -54,6 +59,8 @@ export function addCommandTask(list: ConfigKeyTypeMap['commandTask.add']) {
               await queue.add(async () => await executeCommand(command))
               logger.info(`[${new Date().toISOString()}]: ${command}`)
             }
+            if (!validator())
+              throw new Error('validator check failed')
           }
         }
         catch (error) {
