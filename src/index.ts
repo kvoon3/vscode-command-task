@@ -99,6 +99,10 @@ const { activate, deactivate } = defineExtension(() => {
     await sleep(500)
     throw new Error('TestError')
   })
+
+  return {
+    addCommandTask,
+  }
 })
 
 export { activate, deactivate }
