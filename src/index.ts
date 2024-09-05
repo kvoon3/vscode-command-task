@@ -9,7 +9,7 @@ import { commands, scopedConfigs } from './generated/meta'
 export function addCommandTask(list: ConfigKeyTypeMap['commandTask.add']) {
   for (const [_, i] of list.entries()) {
     const commandName = `${scopedConfigs.scope}.${i.name}`
-    const commandType = computed(() => i.type)
+    const commandType = computed(() => i.type || 'async')
     const tryList = Array.isArray(i.try) ? i.try : [i.try]
     const catchList = Array.isArray(i.catch) ? i.catch : [i.catch]
     const finallyList = Array.isArray(i.finally) ? i.finally : [i.finally]
