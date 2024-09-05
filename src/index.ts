@@ -27,7 +27,7 @@ export function addCommandTask(list: ConfigKeyTypeMap['commandTask.add']) {
         }
         catch (error) {
           logger.info('-- Error --')
-          logger.error(`[${new Date().toISOString()}] Error: `, error)
+          logger.error(`[${new Date().toISOString()}]: `, error)
           Promise.all(catchList.map(async (command) => {
             await executeCommand(command)
             logger.info(`[${new Date().toISOString()}]: ${command}`)
