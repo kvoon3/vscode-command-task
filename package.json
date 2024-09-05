@@ -1,0 +1,165 @@
+{
+  "publisher": "kvoon",
+  "name": "command-task",
+  "displayName": "Command Task",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.9.0",
+  "description": "Executing and organizing command tasks",
+  "author": "Kevin Kwong <kvoon@duck.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/kvoon3",
+  "homepage": "https://github.com/kvoon3/command-task#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kvoon3/command-task"
+  },
+  "bugs": {
+    "url": "https://github.com/kvoon3/command-task/issues"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/kvoon3"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "icon": "res/icon.png",
+  "files": [
+    "LICENSE.md",
+    "dist/*",
+    "res/*"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "commandTask.testOne",
+        "title": "Test One",
+        "category": "Command Task"
+      },
+      {
+        "command": "commandTask.testTwo",
+        "title": "Test Two",
+        "category": "Command Task"
+      },
+      {
+        "command": "commandTask.testThree",
+        "title": "Test Three",
+        "category": "Command Task"
+      },
+      {
+        "command": "commandTask.testError",
+        "title": "Test Error",
+        "category": "Command Task"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Command Task",
+      "properties": {
+        "commandTask.add": {
+          "type": "array",
+          "default": [],
+          "description": "add commands",
+          "items": {
+            "type": "object",
+            "default": {
+              "name": "",
+              "try": [],
+              "catch": [],
+              "finally": [],
+              "type": "async"
+            },
+            "description": "command item",
+            "properties": {
+              "name": {
+                "type": "string",
+                "default": "",
+                "description": "command name"
+              },
+              "try": {
+                "type": [
+                  "string",
+                  "array"
+                ],
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "description": "try command"
+              },
+              "catch": {
+                "type": [
+                  "string",
+                  "array"
+                ],
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "description": "catch command"
+              },
+              "finally": {
+                "type": [
+                  "string",
+                  "array"
+                ],
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "description": "finally command"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "async",
+                  "sync"
+                ],
+                "default": "async",
+                "description": "command task type"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --external vscode",
+    "dev": "nr build --watch",
+    "prepare": "nr update",
+    "update": "vscode-ext-gen --output src/generated/meta.ts --scope commandTask",
+    "lint": "eslint .",
+    "vscode:prepublish": "nr build",
+    "publish": "vsce publish --no-dependencies",
+    "pack": "vsce package --no-dependencies",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && nr publish"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.27.3",
+    "@antfu/ni": "^0.22.4",
+    "@types/node": "^22.5.4",
+    "@types/vscode": "^1.92.0",
+    "@vscode/vsce": "^3.0.0",
+    "bumpp": "^9.5.2",
+    "eslint": "^9.9.1",
+    "esno": "^4.7.0",
+    "p-queue": "^8.0.1",
+    "pnpm": "^9.9.0",
+    "reactive-vscode": "^0.2.2",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.3",
+    "vitest": "^2.0.5",
+    "vscode-ext-gen": "^0.4.3"
+  }
+}
