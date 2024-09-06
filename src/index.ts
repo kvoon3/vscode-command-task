@@ -7,14 +7,19 @@ import type { ConfigKeyTypeMap } from './generated/meta'
 import { commands, scopedConfigs } from './generated/meta'
 
 type ItemType<T> = T extends (infer U)[] ? U : never
+type MaybeGetter<T> = T | (() => T)
+
+type CommandTaskItem = ItemType<ConfigKeyTypeMap['commandTask.add']> & {
+  onBeforeExec?: () => void
+  onAfterExec?: () => void
+  validator?: () => boolean
+}
 
 export function addCommandTask(
-  list: Array<ItemType<ConfigKeyTypeMap['commandTask.add']> & {
-    onBeforeExec?: () => void
-    onAfterExec?: () => void
-    validator?: () => boolean
-  }>,
+  maybeList: Array<MaybeGetter<CommandTaskItem>>,
 ) {
+  const list = maybeList.map(item => typeof item === 'function' ? item() : item)
+
   for (const [_, i] of list.entries()) {
     const {
       onBeforeExec = () => void 0,
