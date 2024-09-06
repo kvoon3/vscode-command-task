@@ -6,11 +6,21 @@ import { logger } from './utils'
 import type { ConfigKeyTypeMap } from './generated/meta'
 import { commands, scopedConfigs } from './generated/meta'
 
+type ItemType<T> = T extends (infer U)[] ? U : never
+
 export function addCommandTask(
-  list: ConfigKeyTypeMap['commandTask.add'],
-  validator: () => boolean = () => true,
+  list: Array<ItemType<ConfigKeyTypeMap['commandTask.add']> & {
+    onBeforeExec?: () => void
+    onAfterExec?: () => void
+    validator?: () => boolean
+  }>,
 ) {
   for (const [_, i] of list.entries()) {
+    const {
+      onBeforeExec = () => void 0,
+      onAfterExec = () => void 0,
+      validator = () => true,
+    } = i
     const commandName = `${scopedConfigs.scope}.${i.name}`
     const commandType = computed(() => i.type || 'async')
     const tryList = Array.isArray(i.try) ? i.try : [i.try]
@@ -22,10 +32,15 @@ export function addCommandTask(
         try {
           if (tryList.length > 0) {
             logger.info('-- Start --')
+            onBeforeExec()
             await Promise.all(tryList.map(async (command) => {
               await executeCommand(command)
+
+              onAfterExec()
+
               if (!validator())
                 throw new Error('validator check failed')
+
               logger.info(`[${new Date().toISOString()}]: ${command}`)
             }))
           }
@@ -55,10 +70,16 @@ export function addCommandTask(
         try {
           if (tryList.length > 0) {
             logger.info('-- Start --')
+
+            onBeforeExec()
+
             for (const command of tryList) {
               await queue.add(async () => await executeCommand(command))
               logger.info(`[${new Date().toISOString()}]: ${command}`)
             }
+
+            onAfterExec()
+
             if (!validator())
               throw new Error('validator check failed')
           }
