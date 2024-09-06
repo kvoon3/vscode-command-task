@@ -116,11 +116,8 @@ const { activate, deactivate } = defineExtension(() => {
   addCommandTask(config.add)
 
   useCommand(commands.testOne, async () => await sleep(1000))
-
   useCommand(commands.testTwo, async () => await sleep(1000))
-
   useCommand(commands.testThree, async () => await sleep(1000))
-
   useCommand(commands.testError, async () => {
     await sleep(500)
     throw new Error('TestError')
