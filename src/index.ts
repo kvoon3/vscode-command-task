@@ -26,7 +26,7 @@ export function addCommandTask(
       onAfterExec = () => void 0,
       validator = () => true,
     } = i
-    const commandName = `${scopedConfigs.scope}.${i.name}`
+    const commandName = `${i.scope}.${i.name}`
     const commandType = computed(() => i.type || 'async')
     const tryList = Array.isArray(i.try) ? i.try : [i.try]
     const catchList = Array.isArray(i.catch) ? i.catch : [i.catch]

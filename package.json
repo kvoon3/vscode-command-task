@@ -88,6 +88,11 @@
                 "default": "",
                 "description": "command name"
               },
+              "scope": {
+                "type": "string",
+                "default": "commandTask",
+                "description": "command scope"
+              },
               "try": {
                 "type": [
                   "string",
