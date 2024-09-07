@@ -122,6 +122,7 @@ const { activate, deactivate } = defineExtension(() => {
     await sleep(500)
     throw new Error('TestError')
   })
+  useCommand(commands.sleep, async () => await sleep(100))
 
   return {
     addCommandTask,

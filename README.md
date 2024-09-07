@@ -16,12 +16,13 @@
 
 <!-- commands -->
 
-| Command                 | Title                    |
-| ----------------------- | ------------------------ |
-| `commandTask.testOne`   | Command Task: Test One   |
-| `commandTask.testTwo`   | Command Task: Test Two   |
-| `commandTask.testThree` | Command Task: Test Three |
-| `commandTask.testError` | Command Task: Test Error |
+| Command                 | Title                         |
+| ----------------------- | ----------------------------- |
+| `commandTask.testOne`   | Command Task: Test One        |
+| `commandTask.testTwo`   | Command Task: Test Two        |
+| `commandTask.testThree` | Command Task: Test Three      |
+| `commandTask.testError` | Command Task: Test Error      |
+| `commandTask.sleep`     | Command Task: Sleep for 100ms |
 
 <!-- commands -->
 

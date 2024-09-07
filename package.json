@@ -57,6 +57,11 @@
         "command": "commandTask.testError",
         "title": "Test Error",
         "category": "Command Task"
+      },
+      {
+        "command": "commandTask.sleep",
+        "title": "Sleep for 100ms",
+        "category": "Command Task"
       }
     ],
     "configuration": {
