@@ -171,5 +171,9 @@
     "vite": "^5.4.3",
     "vitest": "^2.0.5",
     "vscode-ext-gen": "^0.4.3"
-  }
+  },
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ]
 }
