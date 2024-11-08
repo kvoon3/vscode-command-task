@@ -4,7 +4,7 @@ import { sleep } from '@antfu/utils'
 import { config } from './config'
 import { logger } from './utils'
 import type { ConfigKeyTypeMap } from './generated/meta'
-import { commands, scopedConfigs } from './generated/meta'
+import { commands } from './generated/meta'
 
 type ItemType<T> = T extends (infer U)[] ? U : never
 type MaybeGetter<T> = T | (() => T)
